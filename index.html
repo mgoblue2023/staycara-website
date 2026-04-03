@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StayCara — Monitored Independent Living</title>
+  <meta name="description" content="Smart home monitoring for aging parents. Automated alerts, real-time dashboard, weekly expert reports. No cameras. Nothing to wear. StayCara.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sage: #4E7A5F;
+      --sage-dark: #3D6149;
+      --sage-mid: #7A9E87;
+      --sage-light: #A8C4B0;
+      --sage-pale: #E8F0EB;
+      --cream: #F7F3EE;
+      --cream-dark: #EDE7DE;
+      --charcoal: #2C2C2C;
+      --charcoal-light: #4A4A4A;
+      --warm-white: #FDFCFA;
+      --text-muted: #6B6B6B;
+      --accent-green: #4E7A5F;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--charcoal);
+      background: var(--warm-white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(253, 252, 250, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(78, 122, 95, 0.1);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 30px rgba(0,0,0,0.06); }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+    }
+    .logo-text-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .logo-text {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--charcoal);
+      letter-spacing: 0.01em;
+      line-height: 1;
+    }
+    .logo-text .C { color: var(--sage-dark); font-weight: 700; }
+    .logo-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage-dark);
+      font-weight: 400;
+    }
+    .footer-logo .logo-text { color: rgba(255,255,255,0.8); }
+    .footer-logo .logo-sub { color: rgba(255,255,255,0.4); }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--charcoal-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--sage); }
+    .nav-cta {
+      background: var(--sage) !important;
+      color: white !important;
+      padding: 10px 24px !important;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      transition: background 0.2s, transform 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--sage-dark) !important; transform: translateY(-1px); }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .mobile-menu-btn span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--charcoal);
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 160px 32px 100px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .hero-text h1 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 3.2rem;
+      line-height: 1.2;
+      color: var(--charcoal);
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .hero-text h1 em {
+      font-style: italic;
+      color: var(--sage);
+    }
+    .hero-text .subtitle {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      max-width: 520px;
+    }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--sage);
+      color: white;
+      padding: 16px 36px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover { background: var(--sage-dark); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(78,122,95,0.25); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--sage);
+      padding: 16px 36px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 2px solid var(--sage-light);
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-secondary:hover { border-color: var(--sage); background: var(--sage-pale); }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .dashboard-preview {
+      background: var(--charcoal);
+      border-radius: 24px;
+      padding: 32px 28px;
+      width: 340px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.05) inset;
+      position: relative;
+    }
+    .dash-status {
+      background: linear-gradient(135deg, #2a5a3a, #4E7A5F);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .dash-status-dot {
+      width: 12px; height: 12px;
+      background: #6ECF8E;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 8px;
+      animation: pulse-dot 2s infinite;
+      vertical-align: middle;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(110, 207, 142, 0.4); }
+      50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(110, 207, 142, 0); }
+    }
+    .dash-status-label {
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      vertical-align: middle;
+    }
+    .dash-status-sub {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.8rem;
+      margin-top: 6px;
+    }
+    .dash-card {
+      background: #363636;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .dash-card-title {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+    .dash-card-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      font-size: 0.85rem;
+      padding: 4px 0;
+    }
+    .dash-card-row .value { color: var(--sage-light); font-weight: 600; }
+    .dash-card-row .value.open { color: #F5A623; }
+    .dash-activity {
+      display: flex;
+      gap: 4px;
+      align-items: flex-end;
+      height: 40px;
+      margin-top: 8px;
+    }
+    .dash-bar {
+      flex: 1;
+      background: var(--sage);
+      border-radius: 3px 3px 0 0;
+      opacity: 0.7;
+    }
+    .floating-alert {
+      position: absolute;
+      top: -20px;
+      right: -30px;
+      background: white;
+      border-radius: 14px;
+      padding: 14px 18px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .alert-icon {
+      width: 36px; height: 36px;
+      background: var(--sage-pale);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .alert-text { font-size: 0.78rem; }
+    .alert-text strong { display: block; color: var(--charcoal); font-weight: 600; }
+    .alert-text span { color: var(--text-muted); }
+
+    /* ─── HOW IT WORKS ─── */
+    .section { padding: 100px 32px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--sage);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 2.4rem;
+      line-height: 1.3;
+      color: var(--charcoal);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: 60px;
+    }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    .how-card {
+      position: relative;
+      padding: 40px 32px;
+      background: var(--cream);
+      border-radius: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .how-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.06); }
+    .how-number {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--sage-light);
+      opacity: 0.4;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .how-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--charcoal);
+    }
+    .how-card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    /* ─── THREE PILLARS ─── */
+    .pillars-bg { background: var(--charcoal); color: white; }
+    .pillars-bg .section-label { color: var(--sage-light); }
+    .pillars-bg .section-title { color: white; }
+    .pillars-bg .section-subtitle { color: rgba(255,255,255,0.6); }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .pillar {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 40px 32px;
+      transition: background 0.3s;
+    }
+    .pillar:hover { background: rgba(255,255,255,0.1); }
+    .pillar-icon {
+      width: 56px; height: 56px;
+      background: rgba(78, 122, 95, 0.2);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+    }
+    .pillar h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .pillar p {
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ─── COMPARISON ─── */
+    .comparison-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+    }
+    .comparison-table thead th {
+      background: var(--sage);
+      color: white;
+      padding: 20px 24px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: left;
+    }
+    .comparison-table thead th:first-child { border-radius: 16px 0 0 0; }
+    .comparison-table thead th:last-child { border-radius: 0 16px 0 0; }
+    .comparison-table thead th.highlight {
+      background: var(--sage-dark);
+      text-align: center;
+    }
+    .comparison-table td {
+      padding: 18px 24px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--cream-dark);
+      color: var(--charcoal-light);
+    }
+    .comparison-table td:first-child { font-weight: 600; color: var(--charcoal); }
+    .comparison-table td.highlight {
+      background: var(--sage-pale);
+      text-align: center;
+      font-weight: 600;
+      color: var(--sage-dark);
+    }
+    .comparison-table tbody tr:last-child td { border-bottom: none; }
+    .comparison-table tbody tr:last-child td:first-child { border-radius: 0 0 0 16px; }
+    .comparison-table tbody tr:last-child td:last-child { border-radius: 0 0 16px 0; }
+    .check { color: var(--sage); font-weight: 700; }
+    .x-mark { color: #ccc; }
+
+    /* Mobile comparison cards */
+    .comparison-cards { display: none; }
+    .comp-card {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 16px;
+    }
+    .comp-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .comp-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 0.88rem;
+    }
+    .comp-row .label { color: var(--text-muted); }
+    .comp-card.featured {
+      background: var(--sage);
+      color: white;
+      border: 2px solid var(--sage-dark);
+    }
+    .comp-card.featured h4 { border-color: rgba(255,255,255,0.2); }
+    .comp-card.featured .label { color: rgba(255,255,255,0.7); }
+
+    /* ─── PRICING ─── */
+    .pricing-bg { background: var(--cream); }
+    .pricing-card {
+      max-width: 560px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 24px;
+      padding: 56px 48px;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--sage), var(--sage-light));
+    }
+    .pricing-tag {
+      display: inline-block;
+      background: var(--sage-pale);
+      color: var(--sage);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .pricing-amount {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1;
+    }
+    .pricing-amount span { font-size: 1.2rem; color: var(--text-muted); font-weight: 400; }
+    .pricing-setup {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin: 8px 0 32px;
+    }
+    .pricing-features {
+      text-align: left;
+      list-style: none;
+      margin-bottom: 36px;
+    }
+    .pricing-features li {
+      padding: 10px 0;
+      font-size: 0.95rem;
+      color: var(--charcoal-light);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--sage);
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .pricing-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-list { max-width: 740px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--cream-dark);
+      padding: 24px 0;
+    }
+    .faq-q {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+    }
+    .faq-q::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--sage);
+      font-weight: 300;
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+    }
+    .faq-item.open .faq-a { max-height: 300px; }
+    .faq-a p {
+      padding-top: 16px;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+
+    /* ─── CONTACT / CTA ─── */
+    .cta-section {
+      background: var(--sage);
+      color: white;
+      text-align: center;
+      padding: 100px 32px;
+    }
+    .cta-section h2 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .cta-section p {
+      font-size: 1.05rem;
+      opacity: 0.85;
+      max-width: 520px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+    .cta-form {
+      max-width: 600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .cta-form input, .cta-form textarea {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 0.92rem;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .cta-form input::placeholder, .cta-form textarea::placeholder { color: rgba(255,255,255,0.5); }
+    .cta-form input:focus, .cta-form textarea:focus { outline: none; border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.2); }
+    .cta-form .full-width { grid-column: 1 / -1; }
+    .cta-form textarea { resize: vertical; min-height: 80px; }
+    .cta-form button {
+      grid-column: 1 / -1;
+      background: white;
+      color: var(--sage);
+      padding: 16px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+
+    .contact-details {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+    .contact-details a { color: white; text-decoration: none; }
+    .contact-details a:hover { text-decoration: underline; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 40px 32px;
+      font-size: 0.82rem;
+    }
+    footer .tagline {
+      font-style: italic;
+      margin-bottom: 16px;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        padding: 130px 24px 60px;
+        text-align: center;
+      }
+      .hero-text h1 { font-size: 2.4rem; }
+      .hero-text .subtitle { margin: 0 auto 32px; }
+      .hero-ctas { justify-content: center; }
+      .hero-visual { order: -1; }
+      .dashboard-preview { width: 300px; }
+      .floating-alert { right: -10px; }
+
+      .how-grid, .pillars-grid { grid-template-columns: 1fr; gap: 20px; }
+      .section { padding: 70px 24px; }
+      .section-title { font-size: 1.8rem; }
+      .section-subtitle { margin-bottom: 40px; }
+
+      .comparison-table { display: none; }
+      .comparison-cards { display: block; }
+
+      .pricing-card { padding: 40px 28px; }
+      .pricing-amount { font-size: 3rem; }
+
+      .cta-form { grid-template-columns: 1fr; }
+      .cta-section h2 { font-size: 1.8rem; }
+      .contact-details { flex-direction: column; gap: 12px; }
+
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--warm-white);
+        padding: 24px 32px;
+        border-bottom: 1px solid var(--cream-dark);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="#" class="logo-mark">
+        <svg class="logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 5L3 19H7V39H19V28H25V39H37V19H41L22 5Z" fill="#EBF2ED" stroke="#4E7A5F" stroke-width="1.4" stroke-linejoin="round"/>
+          <polyline points="11,30 15,30 17,25 19,34 22,22 25,30 29,30 31,27 33,30" fill="none" stroke="#4E7A5F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="logo-text-wrap">
+          <span class="logo-text">Stay<span class="C">C</span>ara</span>
+          <span class="logo-sub">Monitored Independent Living</span>
+        </div>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#how">How It Works</a>
+        <a href="#features">What You Get</a>
+        <a href="#compare">Compare</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact" class="nav-cta">Get Started</a>
+      </div>
+      <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Know your parent is safe. <em>Every single day.</em></h1>
+      <p class="subtitle">StayCara places invisible sensors throughout your parent's home. If something's wrong, you'll know immediately. No cameras. Nothing to wear. Nothing for them to remember.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-primary">Schedule a Free Consultation</a>
+        <a href="#how" class="btn-secondary">See How It Works</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="dashboard-preview">
+        <div class="dash-status">
+          <span class="dash-status-dot"></span>
+          <span class="dash-status-label">All Clear</span>
+          <div class="dash-status-sub">Last activity: Kitchen, 12 min ago</div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-title">Today's Activity</div>
+          <div class="dash-card-row"><span>Morning routine</span><span class="value">6:42 AM</span></div>
+          <div class="dash-card-row"><span>Kitchen (breakfast)</span><span class="value">7:15 AM</span></div>
+          <div class="dash-card-row"><span>Front door (outing)</span><span class="value">9:30 AM</span></div>
+          <div class="dash-card-row"><span>Returned home</span><span class="value">11:45 AM</span></div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-title">Last Night's Sleep</div>
+          <div class="dash-card-row"><span>Duration</span><span class="value">7h 12m</span></div>
+          <div class="dash-card-row"><span>Heart rate</span><span class="value">62 bpm</span></div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-title">Sensors</div>
+          <div class="dash-card-row"><span>Front door</span><span class="value">Closed</span></div>
+          <div class="dash-card-row"><span>Refrigerator</span><span class="value">Closed</span></div>
+        </div>
+      </div>
+      <div class="floating-alert">
+        <div class="alert-icon">🟢</div>
+        <div class="alert-text">
+          <strong>Mom's doing great</strong>
+          <span>Weekly report ready</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="section-inner">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">Three steps to peace of mind</h2>
+      <p class="section-subtitle">We handle everything. You just check in when you want to.</p>
+      <div class="how-grid">
+        <div class="how-card">
+          <div class="how-number">01</div>
+          <h3>We install the system</h3>
+          <p>Small, invisible sensors placed throughout your parent's home — motion, doors, sleep. No cameras, no wearables, no disruption to their routine. Installed in about two hours.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-number">02</div>
+          <h3>Alerts come straight to you</h3>
+          <p>If something's off — no movement for hours, the fridge hasn't been opened, unusual sleep patterns — you get an automatic call and text immediately. No middleman. No delay.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-number">03</div>
+          <h3>We watch the trends</h3>
+          <p>Every week, our team reviews your parent's data and sends you a report — sleep changes, activity shifts, anything trending in the wrong direction. The patterns that matter before they become emergencies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE PILLARS -->
+  <section class="section pillars-bg" id="features">
+    <div class="section-inner">
+      <div class="section-label">What You Get</div>
+      <h2 class="section-title">Everything a family needs.<br>Nothing your parent notices.</h2>
+      <p class="section-subtitle">Three layers of protection, working together around the clock.</p>
+      <div class="pillars-grid">
+        <div class="pillar">
+          <div class="pillar-icon">⚡</div>
+          <h3>Instant Automated Alerts</h3>
+          <p>The moment something triggers — no activity, an unusual pattern, a door that hasn't opened — you get an automatic phone call and text. Alerts reach you even if your phone is on silent. No human delay, no missed calls.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">📊</div>
+          <h3>24/7 Family Dashboard</h3>
+          <p>Open your phone anytime and see what's happening right now. Is Mom in the kitchen? Did she sleep well? When did she last open the front door? Real-time peace of mind, whenever the anxiety hits.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">📋</div>
+          <h3>Weekly Expert Reports</h3>
+          <p>Every Monday, a personalized report from our team. Not a data dump — a human interpretation of what the week's patterns mean. Sleep declining? Activity shifting? We flag it before it becomes a crisis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="section" id="compare">
+    <div class="section-inner">
+      <div class="section-label">Why StayCara</div>
+      <h2 class="section-title">Not another pendant in a drawer</h2>
+      <p class="section-subtitle">Most safety products require your parent to do something. StayCara works whether they remember to or not.</p>
+
+      <!-- Desktop table -->
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Medical Pendant</th>
+            <th>Smart Watch</th>
+            <th>Cameras</th>
+            <th class="highlight">StayCara</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nothing to wear or charge</td>
+            <td class="x-mark">✗</td>
+            <td class="x-mark">✗</td>
+            <td class="check">✓</td>
+            <td class="highlight">✓</td>
+          </tr>
+          <tr>
+            <td>Works without pressing a button</td>
+            <td class="x-mark">✗</td>
+            <td>Partial</td>
+            <td class="check">✓</td>
+            <td class="highlight">✓</td>
+          </tr>
+          <tr>
+            <td>No cameras — full privacy</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="x-mark">✗</td>
+            <td class="highlight">✓</td>
+          </tr>
+          <tr>
+            <td>Detects changes before emergencies</td>
+            <td class="x-mark">✗</td>
+            <td class="x-mark">✗</td>
+            <td class="x-mark">✗</td>
+            <td class="highlight">✓</td>
+          </tr>
+          <tr>
+            <td>Automatic alerts to family</td>
+            <td>Call center</td>
+            <td>Partial</td>
+            <td>Motion only</td>
+            <td class="highlight">✓ Call + Text</td>
+          </tr>
+          <tr>
+            <td>Sleep &amp; overnight monitoring</td>
+            <td class="x-mark">✗</td>
+            <td>Basic</td>
+            <td class="x-mark">✗</td>
+            <td class="highlight">✓</td>
+          </tr>
+          <tr>
+            <td>Weekly expert health reports</td>
+            <td class="x-mark">✗</td>
+            <td class="x-mark">✗</td>
+            <td class="x-mark">✗</td>
+            <td class="highlight">✓</td>
+          </tr>
+          <tr>
+            <td>Real-time family dashboard</td>
+            <td class="x-mark">✗</td>
+            <td class="x-mark">✗</td>
+            <td>Camera feed</td>
+            <td class="highlight">✓</td>
+          </tr>
+          <tr>
+            <td>Fully managed &amp; installed for you</td>
+            <td>DIY</td>
+            <td>DIY</td>
+            <td>DIY or pro</td>
+            <td class="highlight">✓</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Mobile cards -->
+      <div class="comparison-cards">
+        <div class="comp-card featured">
+          <h4>StayCara</h4>
+          <div class="comp-row"><span class="label">Nothing to wear</span><span>✓</span></div>
+          <div class="comp-row"><span class="label">No cameras</span><span>✓</span></div>
+          <div class="comp-row"><span class="label">Auto alerts to family</span><span>✓ Call + Text</span></div>
+          <div class="comp-row"><span class="label">Sleep monitoring</span><span>✓</span></div>
+          <div class="comp-row"><span class="label">Weekly expert reports</span><span>✓</span></div>
+          <div class="comp-row"><span class="label">Family dashboard</span><span>✓</span></div>
+          <div class="comp-row"><span class="label">Fully managed</span><span>✓</span></div>
+        </div>
+        <div class="comp-card">
+          <h4>Medical Pendant</h4>
+          <div class="comp-row"><span class="label">Nothing to wear</span><span>✗</span></div>
+          <div class="comp-row"><span class="label">Works without button</span><span>✗</span></div>
+          <div class="comp-row"><span class="label">Detects trends</span><span>✗</span></div>
+          <div class="comp-row"><span class="label">Sleep monitoring</span><span>✗</span></div>
+          <div class="comp-row"><span class="label">Family dashboard</span><span>✗</span></div>
+        </div>
+        <div class="comp-card">
+          <h4>Smart Watch</h4>
+          <div class="comp-row"><span class="label">Nothing to wear</span><span>✗</span></div>
+          <div class="comp-row"><span class="label">Auto alerts</span><span>Partial</span></div>
+          <div class="comp-row"><span class="label">Detects trends</span><span>✗</span></div>
+          <div class="comp-row"><span class="label">Expert reports</span><span>✗</span></div>
+          <div class="comp-row"><span class="label">Fully managed</span><span>✗</span></div>
+        </div>
+        <div class="comp-card">
+          <h4>Cameras</h4>
+          <div class="comp-row"><span class="label">Privacy</span><span>✗</span></div>
+          <div class="comp-row"><span class="label">Auto alerts</span><span>Motion only</span></div>
+          <div class="comp-row"><span class="label">Sleep monitoring</span><span>✗</span></div>
+          <div class="comp-row"><span class="label">Expert reports</span><span>✗</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section pricing-bg" id="pricing">
+    <div class="section-inner">
+      <div class="section-label">Simple Pricing</div>
+      <h2 class="section-title" style="text-align:center;">One plan. Everything included.</h2>
+      <p class="section-subtitle" style="text-align:center; margin: 0 auto 60px;">Less than $5 a day for complete peace of mind.</p>
+      <div class="pricing-card">
+        <div class="pricing-tag">Monitored Independent Living</div>
+        <div class="pricing-amount">$149<span>/month</span></div>
+        <div class="pricing-setup">+ one-time setup &amp; installation fee</div>
+        <ul class="pricing-features">
+          <li>Professional in-home installation (under 2 hours)</li>
+          <li>All sensor hardware included</li>
+          <li>Automated emergency alerts — calls and texts sent directly to your family contacts</li>
+          <li>24/7 family dashboard — check in on your parent anytime from your phone</li>
+          <li>Weekly expert report with personalized trend analysis</li>
+          <li>Sleep monitoring with heart rate tracking</li>
+          <li>Ongoing system monitoring, tuning, and support</li>
+          <li>No cameras. No wearables. No contracts.</li>
+        </ul>
+        <a href="#contact" class="btn-primary" style="width:100%; justify-content:center;">Schedule a Free Consultation</a>
+        <p class="pricing-note">30-day tuning period included. Cancel anytime.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="section-inner">
+      <div class="section-label">Common Questions</div>
+      <h2 class="section-title">Everything you're wondering</h2>
+      <p class="section-subtitle" style="margin-bottom:40px;"></p>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">What if my parent doesn't want cameras?</button>
+          <div class="faq-a"><p>We don't use cameras — ever. StayCara uses small, invisible sensors that detect motion, door openings, and sleep patterns. Your parent's privacy is completely preserved. Most parents don't even notice the sensors after the first day.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Does my parent have to wear anything or press buttons?</button>
+          <div class="faq-a"><p>No. That's the whole point. Pendants go unworn and buttons don't get pressed. StayCara works passively — it monitors the home, not the person. There's nothing to remember, charge, or put on in the morning.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">How do the alerts work?</button>
+          <div class="faq-a"><p>Alerts are fully automated. If the system detects something concerning — like no movement for an extended period — it immediately sends a phone call and text message to your designated family contacts. No middleman, no delay. Alerts will reach you even if your phone is on silent.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What does the family dashboard show?</button>
+          <div class="faq-a"><p>The dashboard gives you a real-time view of your parent's home from your phone. You can see current activity status, today's timeline (when they woke up, ate, went out), door sensor states, and last night's sleep data including duration and heart rate. Check in anytime, from anywhere.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What happens if the internet goes out?</button>
+          <div class="faq-a"><p>The core system continues running locally even without internet. If the connection is down for more than 15 minutes, our team is automatically notified so we can investigate. Once the connection restores, everything resumes immediately.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">How long does installation take?</button>
+          <div class="faq-a"><p>About two hours. We place all sensors, configure the system for your parent's specific home layout and daily routine, and verify everything is working before we leave. No holes in walls, no wiring — everything is wireless and adhesive-mounted.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Is there a contract?</button>
+          <div class="faq-a"><p>No long-term contracts. You can cancel anytime. We believe the service should earn your business every month.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What area do you serve?</button>
+          <div class="faq-a"><p>We currently serve the Scottsdale and greater Phoenix, Arizona area.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACT -->
+  <section class="cta-section" id="contact">
+    <h2>Ready to stop worrying?</h2>
+    <p>Schedule a free, no-pressure consultation. We'll learn about your parent's situation and show you exactly how StayCara would work in their home.</p>
+    <form class="cta-form" action="https://formsubmit.co/hello@staycara.com" method="POST">
+      <input type="hidden" name="_subject" value="New StayCara Inquiry">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://staycara.com">
+      <input type="text" name="name" placeholder="Your name" required>
+      <input type="tel" name="phone" placeholder="Phone number" required>
+      <input type="email" name="email" placeholder="Email address" required class="full-width">
+      <input type="text" name="parent_city" placeholder="Your parent's city" class="full-width">
+      <textarea name="concern" placeholder="What's your biggest concern about your parent living alone?" class="full-width"></textarea>
+      <button type="submit">Schedule Free Consultation →</button>
+    </form>
+    <div class="contact-details">
+      <a href="tel:+14807509464">(480) 750-9464</a>
+      <a href="/cdn-cgi/l/email-protection#f199949d9d9eb18285908892908390df929e9c"><span class="__cf_email__" data-cfemail="82eae7eeeeedc2f1f6e3fbe1e3f0e3ace1edef">[email&#160;protected]</span></a>
+      <span>Scottsdale, Arizona</span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="logo-mark footer-logo" style="justify-content:center; margin-bottom:8px;">
+      <svg class="logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 5L3 19H7V39H19V28H25V39H37V19H41L22 5Z" fill="rgba(255,255,255,0.1)" stroke="#A8C4B0" stroke-width="1.4" stroke-linejoin="round"/>
+        <polyline points="11,30 15,30 17,25 19,34 22,22 25,30 29,30 31,27 33,30" fill="none" stroke="#A8C4B0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="logo-text-wrap">
+        <span class="logo-text">Stay<span class="C" style="color:#A8C4B0">C</span>ara</span>
+        <span class="logo-sub">Monitored Independent Living</span>
+      </div>
+    </a>
+    <div class="tagline">Stay home. Stay well. StayCara.</div>
+    <p>© 2026 StayCara LLC. All rights reserved.</p>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Nav scroll effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        document.querySelectorAll('.faq-item').forEach(i => { if (i !== item) i.classList.remove('open'); });
+        item.classList.toggle('open');
+      });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAt
